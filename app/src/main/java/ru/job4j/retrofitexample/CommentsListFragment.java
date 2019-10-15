@@ -2,6 +2,7 @@ package ru.job4j.retrofitexample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +115,7 @@ public class CommentsListFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Comment>> call, Throwable t) {
-                System.out.println(t.getMessage());
+                Log.e("CommentsListFragment",t.getMessage());
             }
         });
 
