@@ -1,6 +1,7 @@
 package ru.job4j.retrofitexample;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void get(View view) {
+    public void get() {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("id", "1");
         Call<List<Post>> call = jsonPlaceHolderApi.getPost(parameters);
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
+                Log.e("MainActivity", t.getMessage());
                 result.setText(t.getMessage());
             }
         });
@@ -114,6 +116,22 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
+                result.setText(t.getMessage());
+            }
+        });
+    }
+
+    public void deleteBtn(View view) {
+        int postId = Integer.valueOf(id.getText().toString());
+        Call<Void> call = jsonPlaceHolderApi.deletePost(postId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                result.setText(String.valueOf(response.code()));
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
                 result.setText(t.getMessage());
             }
         });
